@@ -29,8 +29,11 @@ import { ImageSource } from "./@types";
 type Props = {
   images: ImageSource[];
   keyExtractor?: (imageSrc: ImageSource, index: number) => string;
+  isFavorite?: boolean;
   imageIndex: number;
   visible: boolean;
+  onDownload?: () => void;
+  onFavorite?: () => void;
   onRequestClose: () => void;
   onLongPress?: (image: ImageSource) => void;
   onImageIndexChange?: (imageIndex: number) => void;
@@ -52,9 +55,12 @@ const SCREEN_WIDTH = SCREEN.width;
 
 function ImageViewing({
   images,
+  isFavorite,
   keyExtractor,
   imageIndex,
   visible,
+  onDownload,
+  onFavorite,
   onRequestClose,
   onLongPress = () => {},
   onImageIndexChange,
@@ -110,7 +116,7 @@ function ImageViewing({
               imageIndex: currentImageIndex,
             })
           ) : (
-            <ImageDefaultHeader onRequestClose={onRequestCloseEnhanced} />
+            <ImageDefaultHeader isFavorite={isFavorite} onDownload={onDownload} onFavorite={onFavorite} onRequestClose={onRequestCloseEnhanced} />
           )}
         </Animated.View>
         <VirtualizedList
